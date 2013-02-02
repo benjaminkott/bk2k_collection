@@ -10,7 +10,7 @@
 
 $EM_CONF[$_EXTKEY] = array(
     'title' => 'BK2K Extbase / Fluid Collection',
-    'description' => '',
+    'description' => 'A collection of viewhelpers and other stuff.',
     'category' => 'plugin',
     'author' => 'Benjamin Kott',
     'author_email' => 'info@bk2k.info',
@@ -24,7 +24,7 @@ $EM_CONF[$_EXTKEY] = array(
     'modify_tables' => '',
     'clearCacheOnLoad' => 0,
     'lockType' => '',
-    'version' => '',
+    'version' => '0.1-dev',
     'constraints' => array(
         'depends' => array(
             'extbase' => '6.0',
