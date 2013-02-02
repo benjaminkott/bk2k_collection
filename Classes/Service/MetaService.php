@@ -25,8 +25,6 @@ namespace TYPO3\Bk2kCollection\Service;
 ***************************************************************/
 
 /**
- * Controller of news records
- *
  * @package TYPO3
  * @subpackage bk2k_collection
  * @author Benjamin Kott <info@bk2k.info>
