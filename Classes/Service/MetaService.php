@@ -49,7 +49,7 @@ class MetaService implements \TYPO3\CMS\Core\SingletonInterface {
      * @param string $httpEnquiv
      * @param string $lang
      */
-    public function addMeta($content, $name = NULL, $property = NULL, $scheme = NULL, $httpEnquiv = NULL, $lang = NULL, $collection = "service"){
+    public function addMeta($content, $name = NULL, $property = NULL, $scheme = NULL, $httpEnquiv = NULL, $lang = NULL, $charset = NULL, $collection = "service"){
              
         $tag = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\Bk2kCollection\Object\Meta\Tag');
         $tag->setContent($content);
@@ -58,6 +58,7 @@ class MetaService implements \TYPO3\CMS\Core\SingletonInterface {
         $tag->setScheme($scheme);
         $tag->setHttpEnquiv($httpEnquiv);
         $tag->setLang($lang);
+        $tag->setCharset($charset);
         
         if($tag->getName()){
             $this->metaDataCollection[$collection]['name'][$tag->getName()] = $tag;
@@ -181,6 +182,9 @@ class MetaService implements \TYPO3\CMS\Core\SingletonInterface {
         if($tag->getLang()){
             $newnode->setAttribute('lang',$tag->getLang());
         }
+        if($tag->getCharset()){
+            $newnode->setAttribute('charset',$tag->getCharset());
+        }
         return $dom->saveHTML($newnode);
     }
     
@@ -220,6 +224,7 @@ class MetaService implements \TYPO3\CMS\Core\SingletonInterface {
             $tag['scheme'],
             $tag['http-equiv'],
             $tag['lang'],
+            $tag['charset'],
             'extracted'
         );
     }

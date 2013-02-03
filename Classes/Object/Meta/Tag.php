@@ -64,6 +64,11 @@ class Tag {
     protected $lang;
     
     /**
+     * @var string
+     */   
+    protected $charset;
+    
+    /**
      * @param string $content
      */
     public function setContent($content){
@@ -102,7 +107,14 @@ class Tag {
      * @param string $lang
      */
     public function setLang($lang){
-        $this->lang;        
+        $this->lang = $lang;        
+    }
+    
+    /**
+     * @param string $charset
+     */
+    public function setCharset($charset){
+        $this->charset = $charset;        
     }
     
     /**
@@ -145,6 +157,13 @@ class Tag {
      */
     public function getLang(){
         return $this->lang;
+    }
+    
+    /**
+     * @return string
+     */
+    public function getCharset(){
+        return $this->charset;
     }
     
 }
