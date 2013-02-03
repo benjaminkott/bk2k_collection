@@ -2,9 +2,14 @@ BK2K Extbase / Fluid Collection
 ===============================
 A collection of viewhelpers and other stuff.
 
+
+
 ## ViewHelpers
 
+
 ### Extbase.Plugin
+ViewHelper to output any Extbase Plugin directly called in the fluid template
+
 #### Example
 ```
 {namespace collection = TYPO3\Bk2kCollection\ViewHelpers}
@@ -21,6 +26,7 @@ A collection of viewhelpers and other stuff.
 
 
 ### Page.Meta 
+ViewHelper to add a new or overriding an existing meta tag
 #### Example
 ```
 {namespace collection = TYPO3\Bk2kCollection\ViewHelpers}
@@ -29,12 +35,38 @@ A collection of viewhelpers and other stuff.
 #### Attributes
 | Name          | Type      | Default value | Required  |
 |:--------------|:----------|:--------------|:----------|
-| content       | string    |               | YES       |
+| content       | string    | NULL          | YES       |
 | name          | string    | NULL          | NO        |
 | property      | string    | NULL          | NO        |
 | scheme        | string    | NULL          | NO        |
 | httpEnquiv    | string    | NULL          | NO        |
 | lang          | string    | NULL          | NO        |
+
+
+
+## Service
+
+
+### MetaService
+This service will handle all additions by the page.meta viewhelper and merges
+them with previous rendered tags by TYPO3. It also cleans up double meta tag definitions and orders them alphabetical.
+##### Before
+```html
+<meta property="og:site_name" content="site_name>
+<meta name="description" content="description 1">
+<meta property="og:title" content="title">
+<meta name="description" content="description 2">
+<meta name="author" content="authorname">
+```
+##### After
+```html
+<meta name="author" content="authorname">
+<meta name="description" content="description 2">
+<meta property="og:site_name" content="site_name>
+<meta property="og:title" content="title">
+```
+To get that work the service uses the render-postProcess hook to take operations.
+
 
 
 ## Dependencies
