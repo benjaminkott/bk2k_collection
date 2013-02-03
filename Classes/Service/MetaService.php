@@ -39,87 +39,151 @@ class MetaService implements \TYPO3\CMS\Core\SingletonInterface {
     /**
      * @var array
      */
-    protected $metaDataCollectionExtracted;
+    protected $mergedDataCollection;
     
     /**
-     * @param string $name
      * @param string $content
-     * @param string $additional
+     * @param string $name
+     * @param string $property
+     * @param string $scheme
+     * @param string $httpEnquiv
+     * @param string $lang
      */
-    public function addMeta($name = NULL,$content = NULL){
+    public function addMeta($content, $name = NULL, $property = NULL, $scheme = NULL, $httpEnquiv = NULL, $lang = NULL, $collection = "service"){
+             
+        $tag = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\Bk2kCollection\Object\Meta\Tag');
+        $tag->setContent($content);
+        $tag->setName($name);
+        $tag->setProperty($property);
+        $tag->setScheme($scheme);
+        $tag->setHttpEnquiv($httpEnquiv);
+        $tag->setLang($lang);
         
-        $this->metaDataCollection[$name] = array(
-            'name' => $name,
-            'content' => $content
-        );
+        if($tag->getName()){
+            $this->metaDataCollection[$collection]['name'][$tag->getName()] = $tag;
+        }elseif($tag->getProperty()){
+            $this->metaDataCollection[$collection]['property'][$tag->getProperty()] = $tag;
+        }elseif($tag->getHttpEnquiv()){
+            $this->metaDataCollection[$collection]['http-enquiv'][$tag->getHttpEnquiv()] = $tag;
+        }else{
+            $this->metaDataCollection[$collection]['unknown'][] = $tag;
+        }
 
     }
-        
+
     /**
      * @param array $params
      * @param \TYPO3\CMS\Core\Page\PageRenderer $pObj
      */
     public function pageRenderPostProcess($params, $pObj) {
-        $params['metaTags'] = array_merge($this->parseGeneratedMetaTags($params['metaTags']),$this->generateMetaTags());
+
+        $this->parseGeneratedMetaTags($params['metaTags']);
+        $this->mergeCollections();
+        $params['metaTags'] = $this->generateMetaTags();
+
     }
     
     /**
      * @return array
      */
     protected function generateMetaTags(){
-        $newCollection = $this->mergeCollections();
         $output = array();
-        foreach($newCollection as $key => $tag){
-            $output[] = $this->generateMetaTag($tag);
+        foreach($this->mergedDataCollection as $key => $tag){
+            $output[] = $this->convertTagToString($tag);
         }
         return $output;
     }
-    
-    /**
-     * @param array $tag
-     * @return string
-     */
-    protected function generateMetaTag($tag){
-        $dom = new \DOMDocument('1.0','UTF-8');
-        $node = $dom->createElement("meta");
-        $newnode = $dom->appendChild($node);
-        foreach($tag as $key => $value){
-            $newnode->setAttribute($key,$value);
-        }
-        return $dom->saveHTML($newnode);   
-    }
-    
+
     /**
      * @return array
      */
     protected function mergeCollections(){
-        if(!$this->metaDataCollectionExtracted){
-            return $this->metaDataCollection;
-        }else{
-            $output = $this->metaDataCollectionExtracted;
-            foreach($this->metaDataCollection as $key => $tag){
-                $output[$key] = $tag; 
-            }
-            return $output;            
+
+        $tmpNewCollection = array();
+        $newCollection = array();
+        
+        $typeName = $this->metaDataCollection['extracted']['name'];
+        foreach($this->metaDataCollection['service']['name'] as $key => $tag){
+            $typeName[$key] = $tag;
         }
+        ksort($typeName);
+        array_push($tmpNewCollection,$typeName);
+        
+        $typeProperty = $this->metaDataCollection['extracted']['property'];
+        foreach($this->metaDataCollection['service']['property'] as $key => $tag){
+            $typeProperty[$key] = $tag;
+        }
+        ksort($typeProperty);
+        array_push($tmpNewCollection,$typeProperty);
+        
+        $typeHttpEnquiv = $this->metaDataCollection['extracted']['http-enquiv'];
+        foreach($this->metaDataCollection['service']['http-enquiv'] as $key => $tag){
+            $typeHttpEnquiv[$key] = $tag;
+        }
+        ksort($typeHttpEnquiv);
+        array_push($tmpNewCollection,$typeHttpEnquiv);
+
+        if(is_array($this->metaDataCollection['extracted']['unknown'])){
+            array_push($tmpNewCollection,$this->metaDataCollection['extracted']['unknown']);
+        }
+        if(is_array($this->metaDataCollection['service']['unknown'])){
+            array_push($tmpNewCollection,$this->metaDataCollection['service']['unknown']);
+        }
+        
+        if($tmpNewCollection){
+            foreach($tmpNewCollection as $section){
+                foreach($section as $tag){
+                    array_push($newCollection,$tag);
+                }
+            }
+        }
+
+        $this->mergedDataCollection = $newCollection;
+
     }
 
     /**
      * @param array $metaTags
-     * @return mixed
+     * @return void
      */
     protected function parseGeneratedMetaTags($metaTags = NULL){
         if($metaTags){
             $output = array();            
             foreach($metaTags as $key => $tag){
-                if($this->parseTagToArray($tag)){
-                    unset($metaTags[$key]);
-                }               
+                $this->parseTagToArray($tag);             
             }
-            return $metaTags;
         }
-        return false;
     }
+    
+    /**
+     * @param \TYPO3\Bk2kCollection\Object\Meta\Tag $tag
+     * @return string
+     */
+    protected function convertTagToString(\TYPO3\Bk2kCollection\Object\Meta\Tag $tag){
+        $dom = new \DOMDocument('1.0', 'utf-8');
+        $node = $dom->createElement("meta");
+        $newnode = $dom->appendChild($node);
+        if($tag->getName()){
+            $newnode->setAttribute('name',$tag->getName());
+        }
+        if($tag->getProperty()){
+            $newnode->setAttribute('property',$tag->getProperty());
+        }
+        if($tag->getHttpEnquiv()){
+            $newnode->setAttribute('http-enquiv',$tag->getHttpEnquiv());
+        }
+        if($tag->getContent()){
+            $newnode->setAttribute('content',$tag->getContent());
+        }
+        if($tag->getScheme()){
+            $newnode->setAttribute('scheme',$tag->getScheme());
+        }
+        if($tag->getLang()){
+            $newnode->setAttribute('lang',$tag->getLang());
+        }
+        return $dom->saveHTML($newnode);
+    }
+    
     
     /**
      * @param string $tag
@@ -133,13 +197,13 @@ class MetaService implements \TYPO3\CMS\Core\SingletonInterface {
             $domNodes = $dom->getElementsByTagName('meta');
             foreach($domNodes as $domElement){
                 foreach($domElement->attributes as $name => $attribute){
-                    $output[$name] = $domElement->getAttribute($name);
+                    
+                    // NOTE: THIS IS STRANGE! WORKS FOR NOW
+                    $output[$name] = utf8_decode($attribute->value);
+                    
                 }
-                if($output['name']){
-                    $this->addExtractedMetaTag($output);
-                    return true;
-                }                
-                return false;
+                $this->addExtractedMetaTag($output);
+                return true;
             }
         }
         return false;
@@ -148,8 +212,16 @@ class MetaService implements \TYPO3\CMS\Core\SingletonInterface {
     /**
      * @param array $tag
      */
-    public function addExtractedMetaTag($tag){
-        $this->metaDataCollectionExtracted[$tag['name']] = $tag;
+    protected function addExtractedMetaTag($tag){
+        $this->addMeta(
+            $tag['content'],
+            $tag['name'],
+            $tag['property'],
+            $tag['scheme'],
+            $tag['http-equiv'],
+            $tag['lang'],
+            'extracted'
+        );
     }
 
 }

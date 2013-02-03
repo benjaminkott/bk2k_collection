@@ -57,15 +57,26 @@ class MetaViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
      * @return void
      */
     public function initializeArguments() {
-        $this->registerArgument('name', 'string', 'Name', TRUE);
         $this->registerArgument('content', 'string', 'Content', TRUE);
+        $this->registerArgument('name', 'string', 'Name', FALSE);
+        $this->registerArgument('property', 'string', 'Property', FALSE);
+        $this->registerArgument('scheme', 'string', 'Scheme', FALSE);
+        $this->registerArgument('httpEnquiv', 'string', 'HttpEnquiv', FALSE);
+        $this->registerArgument('lang', 'string', 'Lang', FALSE);        
     }
     
     /** 
      * @return void
      */
     public function render() {
-        $this->metaService->addMeta($this->arguments['name'],$this->arguments['content']);
+        $this->metaService->addMeta(
+            $this->arguments['content'],
+            $this->arguments['name'],
+            $this->arguments['property'],
+            $this->arguments['scheme'],
+            $this->arguments['httpEnquiv'],
+            $this->arguments['lang']
+        );
     }    
     
 }
