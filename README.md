@@ -43,6 +43,26 @@ ViewHelper to add a new or overriding an existing meta tag
 | lang          | string    | NULL          | NO        |
 
 
+### Uri.Image
+This extends viewhelper the default fluid uri image viewhelper to get absolute urls in the frontend.
+#### Example
+```html
+{namespace collection = TYPO3\Bk2kCollection\ViewHelpers}
+{collection:uri.image(src:'uploads/tx_extension/{image}' maxWidth:'100', absolute: 1)}
+```
+#### Attributes
+| Name          | Type      | Default value | Required  |
+|:--------------|:----------|:--------------|:----------|
+| src           | string    | NULL          | YES       |
+| width         | string    | NULL          | NO        |
+| height        | string    | NULL          | NO        |
+| minWidth      | integer   | NULL          | NO        |
+| minHeight     | integer   | NULL          | NO        |
+| maxWidth      | integer   | NULL          | NO        |
+| maxHeight     | integer   | NULL          | NO        |
+| absolute      | boolean   | FALSE         | NO        |
+
+
 
 ## Service
 

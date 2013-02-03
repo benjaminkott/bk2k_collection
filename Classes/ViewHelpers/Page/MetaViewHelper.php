@@ -57,28 +57,31 @@ class MetaViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
      * @return void
      */
     public function initializeArguments() {
-        $this->registerArgument('content', 'string', 'Content', TRUE);
-        $this->registerArgument('name', 'string', 'Name', FALSE);
-        $this->registerArgument('property', 'string', 'Property', FALSE);
-        $this->registerArgument('scheme', 'string', 'Scheme', FALSE);
-        $this->registerArgument('httpEnquiv', 'string', 'HttpEnquiv', FALSE);
-        $this->registerArgument('lang', 'string', 'Lang', FALSE);
-        $this->registerArgument('charset', 'string', 'Charset', FALSE);
+        $this->registerArgument('content', 'string', 'Property: content', TRUE);
+        $this->registerArgument('name', 'string', 'Property: name', FALSE);
+        $this->registerArgument('property', 'string', 'Property: property', FALSE);
+        $this->registerArgument('scheme', 'string', 'Property: scheme', FALSE);
+        $this->registerArgument('httpEnquiv', 'string', 'Property: http-enquiv', FALSE);
+        $this->registerArgument('lang', 'string', 'Property: lang', FALSE);        
     }
     
     /** 
      * @return void
      */
     public function render() {
-        $this->metaService->addMeta(
-            $this->arguments['content'],
-            $this->arguments['name'],
-            $this->arguments['property'],
-            $this->arguments['scheme'],
-            $this->arguments['httpEnquiv'],
-            $this->arguments['lang'],
-            $this->arguments['charset']
-        );
+        if(TYPO3_MODE == 'BE'){
+            return;
+	}
+	if(isset($this->arguments['content']) && !empty($this->arguments['content'])){
+            $this->metaService->addMeta(
+                $this->arguments['content'],
+                $this->arguments['name'],
+                $this->arguments['property'],
+                $this->arguments['scheme'],
+                $this->arguments['httpEnquiv'],
+                $this->arguments['lang']
+            );
+        }
     }    
     
 }
