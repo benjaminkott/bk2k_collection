@@ -52,7 +52,7 @@ This service will handle all additions by the page.meta viewhelper and merges
 them with previous rendered tags by TYPO3. It also cleans up double meta tag definitions and orders them alphabetical.
 ##### Before
 ```html
-<meta property="og:site_name" content="site_name>
+<meta property="og:site_name" content="site_name">
 <meta name="description" content="description 1">
 <meta property="og:title" content="title">
 <meta name="description" content="description 2">
@@ -62,7 +62,7 @@ them with previous rendered tags by TYPO3. It also cleans up double meta tag def
 ```html
 <meta name="author" content="authorname">
 <meta name="description" content="description 2">
-<meta property="og:site_name" content="site_name>
+<meta property="og:site_name" content="site_name">
 <meta property="og:title" content="title">
 ```
 To get that work the service uses the render-postProcess hook to take operations.
