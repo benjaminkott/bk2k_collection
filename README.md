@@ -11,7 +11,7 @@ A collection of viewhelpers and other stuff.
 ViewHelper to output any Extbase Plugin directly called in the fluid template
 
 #### Example
-```
+```html
 {namespace collection = TYPO3\Bk2kCollection\ViewHelpers}
 <collection:extbase.plugin extension="ExtensionName" plugin="PluginName" controller="Controller" action="Action" arguments="{settings: '{singlePid: 10}'}" />
 ```
@@ -28,7 +28,7 @@ ViewHelper to output any Extbase Plugin directly called in the fluid template
 ### Page.Meta 
 ViewHelper to add a new or overriding an existing meta tag
 #### Example
-```
+```html
 {namespace collection = TYPO3\Bk2kCollection\ViewHelpers}
 <collection:page.meta name="description" content="Insert random description here" />
 ```
