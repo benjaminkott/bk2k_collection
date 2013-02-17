@@ -1,10 +1,10 @@
 <?php
-namespace TYPO3\Bk2kCollection\Object\Meta;
+namespace Bk2k\Bk2kCollection\Object\Meta;
 
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2012 Benjamin Kott <info@bk2k.info>
+ *  (c) 2013 Benjamin Kott <info@bk2k.info>
  *  
  *  All rights reserved
  *
@@ -26,8 +26,6 @@ namespace TYPO3\Bk2kCollection\Object\Meta;
  ***************************************************************/
 
 /**
- * @package TYPO3
- * @subpackage bk2k_collection
  * @author Benjamin Kott <info@bk2k.info>
  */
 class Tag {
@@ -97,10 +95,10 @@ class Tag {
     }
     
     /**
-     * @param string $httpEnquiv
+     * @param string $httpEquiv
      */
-    public function setHttpEnquiv($httpEnquiv){
-        $this->httpEquiv = $httpEnquiv;
+    public function setHttpEquiv($httpEquiv){
+        $this->httpEquiv = $httpEquiv;
     }
     
     /**
@@ -148,7 +146,7 @@ class Tag {
     /**
      * @return string
      */
-    public function getHttpEnquiv(){
+    public function getHttpEquiv(){
         return $this->httpEquiv;
     }
     

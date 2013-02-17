@@ -1,28 +1,29 @@
 <?php
-namespace TYPO3\Bk2kCollection\Service;
+namespace Bk2k\Bk2kCollection\Service;
 
 /***************************************************************
-*  Copyright notice
-*
-*  (c) 2010 Benjamin Kott <info@bk2k.info>
-*  All rights reserved
-*
-*  This script is part of the TYPO3 project. The TYPO3 project is
-*  free software; you can redistribute it and/or modify
-*  it under the terms of the GNU General Public License as published by
-*  the Free Software Foundation; either version 2 of the License, or
-*  (at your option) any later version.
-*
-*  The GNU General Public License can be found at
-*  http://www.gnu.org/copyleft/gpl.html.
-*
-*  This script is distributed in the hope that it will be useful,
-*  but WITHOUT ANY WARRANTY; without even the implied warranty of
-*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-*  GNU General Public License for more details.
-*
-*  This copyright notice MUST APPEAR in all copies of the script!
-***************************************************************/
+ *  Copyright notice
+ *
+ *  (c) 2013 Benjamin Kott <info@bk2k.info>
+ *  
+ *  All rights reserved
+ *
+ *  This script is part of the TYPO3 project. The TYPO3 project is
+ *  free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  The GNU General Public License can be found at
+ *  http://www.gnu.org/copyleft/gpl.html.
+ *
+ *  This script is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  This copyright notice MUST APPEAR in all copies of the script!
+ ***************************************************************/
 
 /**
  * @package TYPO3
@@ -46,17 +47,17 @@ class MetaService implements \TYPO3\CMS\Core\SingletonInterface {
      * @param string $name
      * @param string $property
      * @param string $scheme
-     * @param string $httpEnquiv
+     * @param string $httpEquiv
      * @param string $lang
      */
-    public function addMeta($content, $name = NULL, $property = NULL, $scheme = NULL, $httpEnquiv = NULL, $lang = NULL, $charset = NULL, $collection = "service"){
+    public function addMeta($content, $name = NULL, $property = NULL, $scheme = NULL, $httpEquiv = NULL, $lang = NULL, $charset = NULL, $collection = "service"){
              
-        $tag = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\Bk2kCollection\Object\Meta\Tag');
+        $tag = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('Bk2k\Bk2kCollection\Object\Meta\Tag');
         $tag->setContent($content);
         $tag->setName($name);
         $tag->setProperty($property);
         $tag->setScheme($scheme);
-        $tag->setHttpEnquiv($httpEnquiv);
+        $tag->setHttpEquiv($httpEquiv);
         $tag->setLang($lang);
         $tag->setCharset($charset);
         
@@ -64,8 +65,8 @@ class MetaService implements \TYPO3\CMS\Core\SingletonInterface {
             $this->metaDataCollection[$collection]['name'][$tag->getName()] = $tag;
         }elseif($tag->getProperty()){
             $this->metaDataCollection[$collection]['property'][$tag->getProperty()] = $tag;
-        }elseif($tag->getHttpEnquiv()){
-            $this->metaDataCollection[$collection]['http-enquiv'][$tag->getHttpEnquiv()] = $tag;
+        }elseif($tag->getHttpEquiv()){
+            $this->metaDataCollection[$collection]['http-equiv'][$tag->getHttpEquiv()] = $tag;
         }else{
             $this->metaDataCollection[$collection]['unknown'][] = $tag;
         }
@@ -117,12 +118,12 @@ class MetaService implements \TYPO3\CMS\Core\SingletonInterface {
         ksort($typeProperty);
         array_push($tmpNewCollection,$typeProperty);
         
-        $typeHttpEnquiv = $this->metaDataCollection['extracted']['http-enquiv'];
-        foreach($this->metaDataCollection['service']['http-enquiv'] as $key => $tag){
-            $typeHttpEnquiv[$key] = $tag;
+        $typeHttpEquiv = $this->metaDataCollection['extracted']['http-equiv'];
+        foreach($this->metaDataCollection['service']['http-equiv'] as $key => $tag){
+            $typeHttpEquiv[$key] = $tag;
         }
-        ksort($typeHttpEnquiv);
-        array_push($tmpNewCollection,$typeHttpEnquiv);
+        ksort($typeHttpEquiv);
+        array_push($tmpNewCollection,$typeHttpEquiv);
 
         if(is_array($this->metaDataCollection['extracted']['unknown'])){
             array_push($tmpNewCollection,$this->metaDataCollection['extracted']['unknown']);
@@ -157,10 +158,10 @@ class MetaService implements \TYPO3\CMS\Core\SingletonInterface {
     }
     
     /**
-     * @param \TYPO3\Bk2kCollection\Object\Meta\Tag $tag
+     * @param \Bk2k\Bk2kCollection\Object\Meta\Tag $tag
      * @return string
      */
-    protected function convertTagToString(\TYPO3\Bk2kCollection\Object\Meta\Tag $tag){
+    protected function convertTagToString(\Bk2k\Bk2kCollection\Object\Meta\Tag $tag){
         $dom = new \DOMDocument('1.0', 'utf-8');
         $node = $dom->createElement("meta");
         $newnode = $dom->appendChild($node);
@@ -170,8 +171,8 @@ class MetaService implements \TYPO3\CMS\Core\SingletonInterface {
         if($tag->getProperty()){
             $newnode->setAttribute('property',$tag->getProperty());
         }
-        if($tag->getHttpEnquiv()){
-            $newnode->setAttribute('http-enquiv',$tag->getHttpEnquiv());
+        if($tag->getHttpEquiv()){
+            $newnode->setAttribute('http-equiv',$tag->getHttpEquiv());
         }
         if($tag->getContent()){
             $newnode->setAttribute('content',$tag->getContent());

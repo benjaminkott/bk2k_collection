@@ -1,5 +1,5 @@
 <?php
-namespace Bk2k\Bk2kCollection\ViewHelpers\View;
+namespace Bk2k\Bk2kCollection\ViewHelpers\Format;
 
 /***************************************************************
  *  Copyright notice
@@ -27,40 +27,35 @@ namespace Bk2k\Bk2kCollection\ViewHelpers\View;
 
 /**
  * = Example =
- * 
+ *
  * <code title="Example">
  * {namespace collection = Bk2k\Bk2kCollection\ViewHelpers}
- * <collection:view.setPartialRootPath path="fileadmin/partials/">
- * <f:render partial="name" />
- * </collection:view.setPartialRootPath>
+ * <collection:format.removeBlankLines>
+ * -- random fluid/html stuff --
+ * </collection:format.removeBlankLines>
+ * </code>
  * 
  * @author Benjamin Kott <info@bk2k.info>
  */
-class SetPartialRootPathViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
+class RemoveBlankLinesViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
 
-    /**
-     * Initialize arguments.
-     *
-     * @return void
-     */
-    public function initializeArguments() {
-        $this->registerArgument('path', 'string', 'PartialRootPath', TRUE, NULL);       
-    }
-    
-    /**
-     * @return string HTML String of all child nodes.
-     */
-    public function render() {      
-        if($this->arguments['path'] != NULL){
-            $partial_orig = $this->renderingContext->getViewHelperVariableContainer()->getView()->getPartialRootPath();
-            $this->renderingContext->getViewHelperVariableContainer()->getView()->setPartialRootPath($this->arguments['path']); 
-        }
+    public function render() {
         $content = $this->renderChildren();
-        if($this->arguments['path'] != NULL){
-            $this->renderingContext->getViewHelperVariableContainer()->getView()->setPartialRootPath($partial_orig);
-        }
+        $content = preg_replace("/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/", "\n", $content);
         return $content;
     }
+
 }
 
 ?>
+
+
+
+
+
+
+
+
+
+
+

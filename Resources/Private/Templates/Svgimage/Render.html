@@ -1,0 +1,14 @@
+{namespace collection = Bk2k\Bk2kCollection\ViewHelpers}
+<f:if condition="{data.image.0}">
+    <f:if condition="{data.imagesvg.0}">
+        <f:then>
+            <f:image class="none_svg maxwidth" src="{data.image.0.originalFile.publicUrl}" title="{data.image.0.title}" alt="{data.image.0.alternative}" maxWidth="480" />
+            <collection:media.lastImageInfo>
+                <object class="can_svg" data="{data.imagesvg.0.originalFile.publicUrl}" type="image/svg+xml" width="{lastImageInfo.0}" height="{lastImageInfo.1}"></object>
+            </collection:media.lastImageInfo>
+       </f:then>
+        <f:else>
+            <f:image class="maxwidth" src="{data.image.0.originalFile.publicUrl}" title="{data.image.0.title}" alt="{data.image.0.alternative}" maxWidth="480" />
+        </f:else>
+    </f:if>
+</f:if>

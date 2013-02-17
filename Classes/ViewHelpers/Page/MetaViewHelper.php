@@ -1,45 +1,44 @@
 <?php
-namespace TYPO3\Bk2kCollection\ViewHelpers\Page;
+namespace Bk2k\Bk2kCollection\ViewHelpers\Page;
 
 /***************************************************************
-*  Copyright notice
-*
-*  (c) 2010 Benjamin Kott <info@bk2k.info>
-*  All rights reserved
-*
-*  This script is part of the TYPO3 project. The TYPO3 project is
-*  free software; you can redistribute it and/or modify
-*  it under the terms of the GNU General Public License as published by
-*  the Free Software Foundation; either version 2 of the License, or
-*  (at your option) any later version.
-*
-*  The GNU General Public License can be found at
-*  http://www.gnu.org/copyleft/gpl.html.
-*
-*  This script is distributed in the hope that it will be useful,
-*  but WITHOUT ANY WARRANTY; without even the implied warranty of
-*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-*  GNU General Public License for more details.
-*
-*  This copyright notice MUST APPEAR in all copies of the script!
-***************************************************************/
+ *  Copyright notice
+ *
+ *  (c) 2013 Benjamin Kott <info@bk2k.info>
+ *  
+ *  All rights reserved
+ *
+ *  This script is part of the TYPO3 project. The TYPO3 project is
+ *  free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  The GNU General Public License can be found at
+ *  http://www.gnu.org/copyleft/gpl.html.
+ *
+ *  This script is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  This copyright notice MUST APPEAR in all copies of the script!
+ ***************************************************************/
 
 /**
  * = Example =
  *
  * <code title="Example">
- * {namespace collection = TYPO3\Bk2kCollection\ViewHelpers}
+ * {namespace collection = Bk2k\Bk2kCollection\ViewHelpers}
  * <collection:page.meta name="description" content="Insert random description here" />
  * </code>
  * 
- * @package TYPO3
- * @subpackage bk2k_collection
  * @author Benjamin Kott <info@bk2k.info>
  */
 class MetaViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
     
     /**
-      * @var \TYPO3\Bk2kCollection\Service\MetaService
+      * @var \Bk2k\Bk2kCollection\Service\MetaService
       */
     protected $metaService;
     
@@ -47,7 +46,7 @@ class MetaViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
      * @param \TYPO3\Bk2kCollection\Service\MetaService $metaService
      * @return void
      */
-    public function injectMetaService(\TYPO3\Bk2kCollection\Service\MetaService $metaService) {
+    public function injectMetaService(\Bk2k\Bk2kCollection\Service\MetaService $metaService) {
        $this->metaService = $metaService;
     }
     
@@ -61,7 +60,7 @@ class MetaViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
         $this->registerArgument('name', 'string', 'Property: name', FALSE);
         $this->registerArgument('property', 'string', 'Property: property', FALSE);
         $this->registerArgument('scheme', 'string', 'Property: scheme', FALSE);
-        $this->registerArgument('httpEnquiv', 'string', 'Property: http-enquiv', FALSE);
+        $this->registerArgument('httpEquiv', 'string', 'Property: http-equiv', FALSE);
         $this->registerArgument('lang', 'string', 'Property: lang', FALSE);        
     }
     
@@ -78,7 +77,7 @@ class MetaViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
                 $this->arguments['name'],
                 $this->arguments['property'],
                 $this->arguments['scheme'],
-                $this->arguments['httpEnquiv'],
+                $this->arguments['httpEquiv'],
                 $this->arguments['lang']
             );
         }

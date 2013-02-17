@@ -1,10 +1,10 @@
 <?php
-namespace TYPO3\Bk2kCollection\ViewHelpers\Extbase;
+namespace Bk2k\Bk2kCollection\ViewHelpers\Extbase;
 
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2012 Benjamin Kott <info@bk2k.info>
+ *  (c) 2013 Benjamin Kott <info@bk2k.info>
  *  
  *  All rights reserved
  *
@@ -29,12 +29,10 @@ namespace TYPO3\Bk2kCollection\ViewHelpers\Extbase;
  * = Example =
  *
  * <code title="Example">
- * {namespace collection = TYPO3\Bk2kCollection\ViewHelpers}
- * <collection:extbase.plugin extension="ExtensionName" plugin="PluginName" controller="Controller" action="Action" arguments="{settings: '{singlePid: 10}'}" />
+ * {namespace collection = Bk2k\Bk2kCollection\ViewHelpers}
+ * <collection:extbase.plugin vendor="Bk2k" extension="ExtensionName" plugin="PluginName" controller="Controller" action="Action" arguments="{settings: '{singlePid: 10}'}" />
  * </code>
  * 
- * @package TYPO3
- * @subpackage bk2k_collection
  * @author Benjamin Kott <info@bk2k.info>
  */
 class PluginViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
@@ -77,6 +75,7 @@ class PluginViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelp
         $this->registerArgument('plugin', 'string', 'pluginName', TRUE);
         $this->registerArgument('controller', 'string', 'controllerName', TRUE);
         $this->registerArgument('action', 'string', 'actionName', TRUE);
+        $this->registerArgument('vendor', 'string', 'vendorName', FALSE);
         $this->registerArgument('arguments', 'mixed', 'arguments', FALSE);
     }
 
@@ -91,6 +90,9 @@ class PluginViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelp
             'controllerName' => $this->arguments['controller'],
             'action' => $this->arguments['action']
         );
+        if($this->arguments['vendor']){
+            $configuration['vendorName'] = $this->arguments['vendor'];
+        }
         if(is_array($this->arguments['arguments'])){
             $configuration = \array_merge($this->arguments['arguments'],$configuration);
         }

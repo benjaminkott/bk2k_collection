@@ -1,5 +1,5 @@
 <?php
-namespace Bk2k\Bk2kCollection\ViewHelpers\Uri;
+namespace Bk2k\Bk2kCollection\Object\Sitemap;
 
 /***************************************************************
  *  Copyright notice
@@ -28,26 +28,47 @@ namespace Bk2k\Bk2kCollection\ViewHelpers\Uri;
 /**
  * @author Benjamin Kott <info@bk2k.info>
  */
-class ImageViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Uri\ImageViewHelper {
+class Page {
     
     /**
-     * @param string $src
-     * @param string $width
-     * @param string $height
-     * @param integer $minWidth
-     * @param integer $minHeight
-     * @param integer $maxWidth
-     * @param integer $maxHeight
-     * @param boolean $absolute
+     * @var string
+     * @validate NotEmpty
+     */    
+    protected $loc;
+    
+    /**
+     * @var string
      */
-    public function render($src, $width = NULL, $height = NULL, $minWidth = NULL, $minHeight = NULL, $maxWidth = NULL, $maxHeight = NULL, $absolute = FALSE) {
-        $imageSource = parent::render($src, $width, $height, $minWidth, $minHeight, $maxWidth, $maxHeight);
-        if($absolute && TYPO3_MODE === 'FE'){
-            $imageSource = $this->controllerContext->getRequest()->getBaseUri().$imageSource;
-        }
-        return $imageSource;
+    protected $lastmod;
+    
+    /**
+     * @param string $loc
+     */
+    public function setLoc($loc){
+        $this->loc = $loc;
     }
     
+    /**
+     * @param string $lastmod
+     */
+    public function setLastmod($lastmod){
+        $this->lastmod = $lastmod;
+    }
+    
+    /**
+     * @return string
+     */
+    public function getLoc(){
+        return $this->loc;
+    }
+    
+    /**
+     * @return string $lastmod
+     */
+    public function getLastmod(){
+        return $this->lastmod;
+    }
+
 }
 
 ?>

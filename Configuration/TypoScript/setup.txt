@@ -1,0 +1,23 @@
+# Include sitemap.xml
+bk2k_sitemap = PAGE
+bk2k_sitemap {
+
+    typeNum = 2000
+    config {
+        disableAllHeaderCode = 1
+        renderCharset = UTF-8
+        xmlprologue = xml_10
+        additionalHeaders = Content-type: text/xml
+        xhtml_cleaning = 0
+        no_cache = 1
+    }
+
+    10 = USER
+    10 {
+        userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
+        vendorName = Bk2k
+        extensionName = Bk2kCollection
+        pluginName = Sitemap
+
+    }
+}

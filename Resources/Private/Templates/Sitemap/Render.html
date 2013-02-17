@@ -1,0 +1,10 @@
+{namespace collection = Bk2k\Bk2kCollection\ViewHelpers}
+<collection:format.removeBlankLines>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
+    <f:if condition="{data}">
+        <f:for each="{data}" as="item">  
+            <f:render partial="Sitemap/Item" arguments="{item:item}" />
+        </f:for>
+    </f:if>
+</urlset>
+</collection:format.removeBlankLines>

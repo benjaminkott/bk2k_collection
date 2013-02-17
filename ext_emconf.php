@@ -21,19 +21,20 @@ $EM_CONF[$_EXTKEY] = array(
     'internal' => '',
     'uploadfolder' => '0',
     'createDirs' => '',
-    'modify_tables' => '',
+    'modify_tables' => 'tt_content',
     'clearCacheOnLoad' => 0,
     'lockType' => '',
-    'version' => '0.2-dev',
+    'version' => '0.2',
     'constraints' => array(
         'depends' => array(
             'extbase' => '6.0',
             'fluid' => '6.0',
-            'typo3' => '6.0',
+            'typo3' => '6.0.2',
         ),
         'conflicts' => array(
         ),
         'suggests' => array(
+            'realurl' => ''
         ),
     ),
 );
