@@ -61,7 +61,8 @@ class MetaViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
         $this->registerArgument('property', 'string', 'Property: property', FALSE);
         $this->registerArgument('scheme', 'string', 'Property: scheme', FALSE);
         $this->registerArgument('httpEquiv', 'string', 'Property: http-equiv', FALSE);
-        $this->registerArgument('lang', 'string', 'Property: lang', FALSE);        
+        $this->registerArgument('lang', 'string', 'Property: lang', FALSE); 
+        $this->registerArgument('keep', 'boolean', 'Keep the entry and do not try to merge', FALSE); 
     }
     
     /** 
@@ -78,7 +79,10 @@ class MetaViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
                 $this->arguments['property'],
                 $this->arguments['scheme'],
                 $this->arguments['httpEquiv'],
-                $this->arguments['lang']
+                $this->arguments['lang'],
+                NULL,
+                'service',
+                $this->arguments['keep']
             );
         }
     }    

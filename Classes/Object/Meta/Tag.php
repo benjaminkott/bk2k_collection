@@ -67,6 +67,11 @@ class Tag {
     protected $charset;
     
     /**
+     * @var bool
+     */   
+    protected $keep;
+    
+    /**
      * @param string $content
      */
     public function setContent($content){
@@ -116,6 +121,13 @@ class Tag {
     }
     
     /**
+     * @param boolean $keep
+     */
+    public function setKeep($keep){
+        $this->keep = $keep;        
+    }
+    
+    /**
      * @return string
      */
     public function getContent(){
@@ -162,6 +174,13 @@ class Tag {
      */
     public function getCharset(){
         return $this->charset;
+    }
+    
+    /**
+     * @return boolean
+     */
+    public function getKeep(){
+        return $this->keep;
     }
     
 }

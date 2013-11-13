@@ -49,8 +49,11 @@ class MetaService implements \TYPO3\CMS\Core\SingletonInterface {
      * @param string $scheme
      * @param string $httpEquiv
      * @param string $lang
+     * @param string $charset
+     * @param string $collection
+     * @param boolean $keep
      */
-    public function addMeta($content, $name = NULL, $property = NULL, $scheme = NULL, $httpEquiv = NULL, $lang = NULL, $charset = NULL, $collection = "service"){
+    public function addMeta($content, $name = NULL, $property = NULL, $scheme = NULL, $httpEquiv = NULL, $lang = NULL, $charset = NULL, $collection = "service", $keep = false){
              
         $tag = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('Bk2k\Bk2kCollection\Object\Meta\Tag');
         $tag->setContent($content);
@@ -60,8 +63,11 @@ class MetaService implements \TYPO3\CMS\Core\SingletonInterface {
         $tag->setHttpEquiv($httpEquiv);
         $tag->setLang($lang);
         $tag->setCharset($charset);
-        
-        if($tag->getName()){
+        $tag->setKeep($keep);
+            
+        if($tag->getKeep()){
+            $this->metaDataCollection[$collection]['keep'][] = $tag;
+        }elseif($tag->getName()){
             $this->metaDataCollection[$collection]['name'][$tag->getName()] = $tag;
         }elseif($tag->getProperty()){
             $this->metaDataCollection[$collection]['property'][$tag->getProperty()] = $tag;
@@ -130,6 +136,9 @@ class MetaService implements \TYPO3\CMS\Core\SingletonInterface {
         }
         if(is_array($this->metaDataCollection['service']['unknown'])){
             array_push($tmpNewCollection,$this->metaDataCollection['service']['unknown']);
+        }
+        if(is_array($this->metaDataCollection['service']['keep'])){
+            array_push($tmpNewCollection,$this->metaDataCollection['service']['keep']);
         }
         
         if($tmpNewCollection){
