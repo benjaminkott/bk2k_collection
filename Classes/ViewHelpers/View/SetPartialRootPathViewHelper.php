@@ -1,5 +1,5 @@
 <?php
-namespace Bk2k\Bk2kCollection\ViewHelpers\View;
+namespace BK2K\Bk2kCollection\ViewHelpers\View;
 
 /***************************************************************
  *  Copyright notice
@@ -29,7 +29,7 @@ namespace Bk2k\Bk2kCollection\ViewHelpers\View;
  * = Example =
  * 
  * <code title="Example">
- * {namespace collection = Bk2k\Bk2kCollection\ViewHelpers}
+ * {namespace collection = BK2K\Bk2kCollection\ViewHelpers}
  * <collection:view.setPartialRootPath path="fileadmin/partials/">
  * <f:render partial="name" />
  * </collection:view.setPartialRootPath>

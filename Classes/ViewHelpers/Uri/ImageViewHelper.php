@@ -1,5 +1,5 @@
 <?php
-namespace Bk2k\Bk2kCollection\ViewHelpers\Uri;
+namespace BK2K\Bk2kCollection\ViewHelpers\Uri;
 
 /***************************************************************
  *  Copyright notice

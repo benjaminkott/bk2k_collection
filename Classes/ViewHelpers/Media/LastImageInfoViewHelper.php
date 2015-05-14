@@ -1,5 +1,5 @@
 <?php
-namespace Bk2k\Bk2kCollection\ViewHelpers\Media;
+namespace BK2K\Bk2kCollection\ViewHelpers\Media;
 
 /***************************************************************
  *  Copyright notice
@@ -29,7 +29,7 @@ namespace Bk2k\Bk2kCollection\ViewHelpers\Media;
  * = Example =
  *
  * <code title="Example">
- * {namespace collection = Bk2k\Bk2kCollection\ViewHelpers}
+ * {namespace collection = BK2K\Bk2kCollection\ViewHelpers}
  * <f:image src="{src}" alt="{alt}" maxWidth="480" />
  * <collection:media.lastImageInfo>
  * <f:debug>{lastImageInfo}</f:debug>

@@ -1,5 +1,5 @@
 <?php
-namespace Bk2k\Bk2kCollection\ViewHelpers\Media;
+namespace BK2K\Bk2kCollection\ViewHelpers\Media;
 
 /***************************************************************
  *  Copyright notice

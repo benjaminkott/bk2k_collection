@@ -1,5 +1,5 @@
 <?php
-namespace Bk2k\Bk2kCollection\ViewHelpers\Format;
+namespace BK2K\Bk2kCollection\ViewHelpers\Format;
 
 /***************************************************************
  *  Copyright notice
@@ -29,7 +29,7 @@ namespace Bk2k\Bk2kCollection\ViewHelpers\Format;
  * = Example =
  *
  * <code title="Example">
- * {namespace collection = Bk2k\Bk2kCollection\ViewHelpers}
+ * {namespace collection = BK2K\Bk2kCollection\ViewHelpers}
  * <collection:format.removeBlankLines>
  * -- random fluid/html stuff --
  * </collection:format.removeBlankLines>

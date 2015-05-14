@@ -1,5 +1,5 @@
 <?php
-namespace Bk2k\Bk2kCollection\ViewHelpers\Page;
+namespace BK2K\Bk2kCollection\ViewHelpers\Page;
 
 /***************************************************************
  *  Copyright notice
@@ -29,7 +29,7 @@ namespace Bk2k\Bk2kCollection\ViewHelpers\Page;
  * = Example =
  *
  * <code title="Example">
- * {namespace collection = Bk2k\Bk2kCollection\ViewHelpers}
+ * {namespace collection = BK2K\Bk2kCollection\ViewHelpers}
  * <collection:page.meta name="description" content="Insert random description here" />
  * </code>
  * 
@@ -38,7 +38,7 @@ namespace Bk2k\Bk2kCollection\ViewHelpers\Page;
 class MetaViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
     
     /**
-      * @var \Bk2k\Bk2kCollection\Service\MetaService
+      * @var \BK2K\Bk2kCollection\Service\MetaService
       */
     protected $metaService;
     
@@ -46,7 +46,7 @@ class MetaViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
      * @param \TYPO3\Bk2kCollection\Service\MetaService $metaService
      * @return void
      */
-    public function injectMetaService(\Bk2k\Bk2kCollection\Service\MetaService $metaService) {
+    public function injectMetaService(\BK2K\Bk2kCollection\Service\MetaService $metaService) {
        $this->metaService = $metaService;
     }
     

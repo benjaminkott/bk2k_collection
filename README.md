@@ -19,7 +19,7 @@ If your extension uses the namespaces for 6.0 you have to set the vendor.
 
 #### Example
 ```html
-{namespace collection = Bk2k\Bk2kCollection\ViewHelpers}
+{namespace collection = BK2K\Bk2kCollection\ViewHelpers}
 <collection:extbase.plugin vendor="Bk2k" extension="ExtensionName" plugin="PluginName" controller="Controller" action="Action" arguments="{settings: '{singlePid: 10}'}" />
 ```
 #### Attributes
@@ -38,7 +38,7 @@ ViewHelper to remove blank lines from output
 
 #### Example
 ```html
-{namespace collection = Bk2k\Bk2kCollection\ViewHelpers}
+{namespace collection = BK2K\Bk2kCollection\ViewHelpers}
 <collection:format.removeBlankLines>
 -- random fluid/html stuff --
 </collection:format.removeBlankLines>
@@ -50,7 +50,7 @@ ViewHelper to get $GLOBALS['TSFE']->lastImageInfo accessible in the fluid templa
 
 #### Example
 ```html
-{namespace collection = Bk2k\Bk2kCollection\ViewHelpers}
+{namespace collection = BK2K\Bk2kCollection\ViewHelpers}
 <f:image src="{src}" alt="{alt}" maxWidth="480" />
 <collection:media.lastImageInfo>
 <f:debug>{lastImageInfo}</f:debug>
@@ -62,7 +62,7 @@ ViewHelper to get $GLOBALS['TSFE']->lastImageInfo accessible in the fluid templa
 ViewHelper to add a new or overriding an existing meta tag
 #### Example
 ```html
-{namespace collection = Bk2k\Bk2kCollection\ViewHelpers}
+{namespace collection = BK2K\Bk2kCollection\ViewHelpers}
 <collection:page.meta name="description" content="Insert random description here" />
 ```
 #### Attributes
@@ -81,7 +81,7 @@ This extends viewhelper the default fluid uri image viewhelper to get absolute u
 
 #### Example
 ```html
-{namespace collection = Bk2k\Bk2kCollection\ViewHelpers}
+{namespace collection = BK2K\Bk2kCollection\ViewHelpers}
 {collection:uri.image(src:'uploads/tx_extension/{image}' maxWidth:'100', absolute: 1)}
 ```
 
@@ -103,7 +103,7 @@ ViewHelper to change the partialRootPath for a specific part of the fluid templa
 
 #### Example
 ```html
-{namespace collection = Bk2k\Bk2kCollection\ViewHelpers}
+{namespace collection = BK2K\Bk2kCollection\ViewHelpers}
 <collection:view.setPartialRootPath path="fileadmin/partials/">
 <f:render partial="name" />
 </collection:view.setPartialRootPath>
@@ -174,11 +174,11 @@ class AddPagesHook implements \TYPO3\CMS\Core\SingletonInterface {
 
     /**
      * @param array $_params
-     * @param \Bk2k\Bk2kCollection\Service\SitemapService $pObj
+     * @param \BK2K\Bk2kCollection\Service\SitemapService $pObj
      */
     public function addPages($_params, $pObj){
         $loc = $this->getUrlById('1');
-        $page = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('Bk2k\Bk2kCollection\Object\Sitemap\Page');
+        $page = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('BK2K\Bk2kCollection\Object\Sitemap\Page');
         $page->setLoc($loc);
         $page->setLastmod(date());
         $_params['urlCollection'][$loc] = $page;        

@@ -1,11 +1,11 @@
 <?php
-namespace Bk2k\Bk2kCollection\Service;
+namespace BK2K\Bk2kCollection\Service;
 
 /***************************************************************
  *  Copyright notice
  *
  *  (c) 2013 Benjamin Kott <info@bk2k.info>
- *  
+ *
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -25,37 +25,42 @@ namespace Bk2k\Bk2kCollection\Service;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use BK2K\Bk2kCollection\Object\Sitemap\Page;
+use TYPO3\CMS\Core\SingletonInterface;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Frontend\Page\PageRepository;
+
 /**
  * @author Benjamin Kott <info@bk2k.info>
  */
-class SitemapService implements \TYPO3\CMS\Core\SingletonInterface {
-       
+class SitemapService implements SingletonInterface {
+
     /**
      * @var array
      */
     protected $urlCollection;
-    
+
     /**
      * @var array
      */
     protected $pageCollection;
-    
+
     /**
      * @var \TYPO3\CMS\Frontend\Page\PageRepository
      */
     protected $pageRepository;
-    
+
     public function __construct() {
-        $this->pageRepository = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Frontend\\Page\\PageRepository');
+        $this->pageRepository = GeneralUtility::makeInstance(PageRepository::class);
         $this->collectPages();
     }
-    
+
     /**
      * @param int $id
      * @return array
      */
     protected function getPageMenu($id){
-        return $this->pageRepository->getMenu($id, $fields = '*', $sortField = 'sorting'); 
+        return $this->pageRepository->getMenu($id,'*','sorting');
     }
 
     /**
@@ -77,44 +82,44 @@ class SitemapService implements \TYPO3\CMS\Core\SingletonInterface {
      * return void
      */
     protected function collectPages(){
-        $rootline = $this->pageRepository->getRootLine($GLOBALS['TSFE']->id);        
+        $rootline = $this->pageRepository->getRootLine($GLOBALS['TSFE']->id);
         foreach($rootline as $page){
             $this->collectPage($this->pageRepository->getPage($page['uid']));
-        }        
+        }
         $this->generateUrlCollection();
     }
-    
+
     /**
      * @param string $loc
      * return void
-     */   
+     */
     public function addPage($loc, $lastmod = NULL){
-        $page = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('Bk2k\Bk2kCollection\Object\Sitemap\Page');
+        $page = GeneralUtility::makeInstance(Page::class);
         $page->setLoc($loc);
         if($lastmod){
             $page->setLastmod($lastmod);
         }
         $this->urlCollection[$loc] = $page;
     }
-    
+
     /**
      * @return void
      */
     public function generateUrlCollection(){
-        foreach($this->pageCollection as $page){            
+        foreach($this->pageCollection as $page){
             $this->addPage($this->getUrlById($page['uid']),($page['SYS_LASTCHANGED'] ? $page['SYS_LASTCHANGED'] : $page['crdate']));
-        }  
+        }
         // HOOK TO ADD URLS
         if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['bk2k_collection']['service']['sitemap']['addPages'])) {
             $_params = array(
                 'urlCollection' => &$this->urlCollection
             );
-            foreach ($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['bk2k_collection']['service']['sitemap']['addPages'] as $_funcRef) {   
-                \TYPO3\CMS\Core\Utility\GeneralUtility::callUserFunction($_funcRef, $_params, $this);
+            foreach ($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['bk2k_collection']['service']['sitemap']['addPages'] as $_funcRef) {
+                GeneralUtility::callUserFunction($_funcRef, $_params, $this);
             }
         }
     }
-    
+
     public function getUrlById($pageUid){
         $config = array(
             'parameter' => $pageUid,
@@ -125,15 +130,15 @@ class SitemapService implements \TYPO3\CMS\Core\SingletonInterface {
         );
         return $GLOBALS['TSFE']->cObj->typoLink('', $config);
     }
-    
+
     /**
      * @param string $loc
      * return void
-     */   
+     */
     public function removePage($loc){
         unset($this->urlCollection[$loc]);
     }
-    
+
     /**
      * return array
      */
@@ -142,5 +147,3 @@ class SitemapService implements \TYPO3\CMS\Core\SingletonInterface {
     }
 
 }
-
-?>

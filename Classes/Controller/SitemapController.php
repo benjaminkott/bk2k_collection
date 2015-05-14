@@ -1,11 +1,11 @@
 <?php
-namespace Bk2k\Bk2kCollection\Controller;
+namespace BK2K\Bk2kCollection\Controller;
 
 /***************************************************************
  *  Copyright notice
  *
  *  (c) 2013 Benjamin Kott <info@bk2k.info>
- *  
+ *
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -25,13 +25,15 @@ namespace Bk2k\Bk2kCollection\Controller;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+
 /**
  * @author Benjamin Kott <info@bk2k.info>
  */
-class SitemapController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController {
-    
+class SitemapController extends ActionController {
+
     /**
-     * @var \Bk2k\Bk2kCollection\Service\SitemapService
+     * @var \BK2K\Bk2kCollection\Service\SitemapService
      * @inject
      */
     protected $sitemapService;
@@ -39,11 +41,9 @@ class SitemapController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     /**
      * @return void
      */
-    public function renderAction() {  
+    public function renderAction() {
         $data = $this->sitemapService->getUrlCollection();
         $this->view->assign('data',$data);
     }
 
 }
-
-?>

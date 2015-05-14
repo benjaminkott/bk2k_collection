@@ -1,11 +1,11 @@
 <?php
-namespace Bk2k\Bk2kCollection\ViewHelpers\Extbase;
+namespace BK2K\Bk2kCollection\ViewHelpers\Extbase;
 
 /***************************************************************
  *  Copyright notice
  *
  *  (c) 2013 Benjamin Kott <info@bk2k.info>
- *  
+ *
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -25,17 +25,19 @@ namespace Bk2k\Bk2kCollection\ViewHelpers\Extbase;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
+
 /**
  * = Example =
  *
  * <code title="Example">
- * {namespace collection = Bk2k\Bk2kCollection\ViewHelpers}
+ * {namespace collection = BK2K\Bk2kCollection\ViewHelpers}
  * <collection:extbase.plugin vendor="Bk2k" extension="ExtensionName" plugin="PluginName" controller="Controller" action="Action" arguments="{settings: '{singlePid: 10}'}" />
  * </code>
- * 
+ *
  * @author Benjamin Kott <info@bk2k.info>
  */
-class PluginViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
+class PluginViewHelper extends AbstractViewHelper {
 
     /**
      * Extbase Bootstrap
@@ -64,7 +66,7 @@ class PluginViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelp
     public function injectConfigurationManager(\TYPO3\CMS\Extbase\Configuration\ConfigurationManager $configurationManager) {
        $this->configurationManager = $configurationManager;
     }
-   
+
    /**
      * Initialize arguments.
      *
@@ -82,7 +84,7 @@ class PluginViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelp
     /**
      * @return mixed
      */
-    public function render(){  
+    public function render(){
         $extensionConfiguration = $this->configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK, $this->arguments['extension'], $this->arguments['plugin']);
         $configuration = array(
             'extensionName' => $this->arguments['extension'],
@@ -102,5 +104,3 @@ class PluginViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelp
     }
 
 }
-
-?>
